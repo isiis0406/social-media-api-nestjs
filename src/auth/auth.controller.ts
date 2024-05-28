@@ -7,7 +7,9 @@ import { ResetPasswordConfirmationDto } from './dto/reset-password-confirmation.
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { DeleteAccountDto } from './dto/delete-account.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Authentication')	
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) { }
@@ -31,6 +33,7 @@ export class AuthController {
         return this.authService.resetPasswordConfirmationDto(resetPasswordConfirmationDto)
     }
 
+    @ApiBearerAuth('access-token')	
     @UseGuards(AuthGuard('jwt'))
     @Delete('delete')
     deleteAccount(@Req() req: Request, @Body() deleteAccountDto : DeleteAccountDto){

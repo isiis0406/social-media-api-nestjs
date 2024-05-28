@@ -23,7 +23,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
         const user = await this.prismaService.user.findUnique({where:  { email : payload.email}});
         if(!user) throw new UnauthorizedException('Unauthorized');
         Reflect.deleteProperty(user, "password");
-        console.log(user);
         return user;
     }
 }
